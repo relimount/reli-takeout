@@ -7,9 +7,9 @@ import java.io.Serializable;
 @Data
 public class SetmealPageQueryDTO implements Serializable {
 
-    private int page;
+    private Integer page;
 
-    private int pageSize;
+    private Integer pageSize;
 
     private String name;
 
