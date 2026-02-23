@@ -6,3 +6,12 @@
 **/test/
 **/application-dev.yml
 **/application-prod.yml
+**/application-*.yml
+.env
+*.env
+.env.local
+.env.*.local
+logs/
+*.log
+.DS_Store
+Thumbs.db

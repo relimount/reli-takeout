@@ -78,4 +78,13 @@ public class DishServiceImpl implements DishService {
         //封装分页结果
         return new PageResult(page.getTotal(), page.getResult());
     }
+
+    /**
+     * 批量删除菜品
+     * @param ids 要删除的菜品ID列表
+     */
+    @Override
+    public void deleteBatch(List<Long> ids) {
+        dishMapper.deleteBatch(ids);
+    }
 }

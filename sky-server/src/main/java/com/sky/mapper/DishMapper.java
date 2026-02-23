@@ -8,6 +8,8 @@ import com.sky.enumeration.OperationType;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 /**
  * 菜品数据访问层接口
  * 定义菜品相关的数据库操作方法
@@ -36,4 +38,10 @@ public interface DishMapper {
      * @return 分页结果
      */
     Page<Dish> page(DishPageQueryDTO dishPageQueryDTO);
+
+    /**
+     * 批量删除菜品
+     * @param ids 要删除的菜品ID列表
+     */
+    void deleteBatch(List<Long> ids);
 }
