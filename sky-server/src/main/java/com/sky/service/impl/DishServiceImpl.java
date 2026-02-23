@@ -76,7 +76,7 @@ public class DishServiceImpl implements DishService {
         PageHelper.startPage(dishPageQueryDTO.getPage(),dishPageQueryDTO.getPageSize());
         
         //执行分页查询
-        Page<Dish> page = dishMapper.page(dishPageQueryDTO);
+        Page<DishVO> page = dishMapper.page(dishPageQueryDTO);
         
         //封装分页结果
         return new PageResult(page.getTotal(), page.getResult());
