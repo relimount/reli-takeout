@@ -60,4 +60,7 @@ public interface DishMapper {
      */
     @AutoFill(OperationType.UPDATE)
     void UpdateDish(Dish dish);
+
+    @Select("SELECT * FROM dish WHERE category_id = #{categoryId}")
+    List<Dish> listDishByCategoryId(Long categoryId);
 }
