@@ -9,4 +9,8 @@
             (  #{dish.setmealId},#{dish.dishId}, #{dish.name}, #{dish.price}, #{dish.copies})
         </foreach>
     </insert>
+
+    <select id="getBySetmealId" resultType="com.sky.entity.SetmealDish">
+        select * from setmeal_dish where setmeal_id = #{setmealId}
+    </select>
 </mapper>

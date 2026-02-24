@@ -10,10 +10,12 @@ import com.sky.mapper.SetmealDishMapper;
 import com.sky.mapper.SetmealMapper;
 import com.sky.result.PageResult;
 import com.sky.service.SetmealService;
+import com.sky.vo.SetmealVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,6 +26,9 @@ public class SetmealServiceImpl implements SetmealService {
     private SetmealMapper setmealMapper;
     @Autowired
     private SetmealDishMapper setmealDishMapper;
+    @Autowired
+    private SetmealService setmealService;
+
     @Override
     public void saveSetmeal(SetmealDTO setmealDTO) {
         Setmeal setmeal = new Setmeal();
@@ -46,4 +51,35 @@ public class SetmealServiceImpl implements SetmealService {
     public void deleteBatch(Long[] ids) {
         setmealMapper.deleteBatch(ids);
     }
+
+    @Override
+    public SetmealVO getById(Long id) {
+        SetmealVO setmealVO= setmealMapper.getById(id);
+        List<SetmealDish> dishList = setmealDishMapper.getBySetmealId(id);
+        setmealVO.setSetmealDishes(dishList);
+        return setmealVO;
+    }
+
+    @Transactional
+    @Override
+    public void update(SetmealDTO setmealDTO) {
+        // 更新套餐基本信息
+        Setmeal setmeal = new Setmeal();
+        BeanUtils.copyProperties(setmealDTO, setmeal);
+        setmealMapper.update(setmeal);
+        
+        // 更新套餐菜品关系
+        List<SetmealDish> dishList = setmealDTO.getSetmealDishes();
+        Long id = setmealDTO.getId();
+        
+        // 先删除原有的套餐菜品关系
+        setmealDishMapper.deleteBySetmealId(id);
+        
+        // 如果有新的菜品关系，则插入
+        if(dishList != null && !dishList.isEmpty()){
+            dishList.forEach(e -> e.setSetmealId(id));
+            setmealDishMapper.saveSetmealDish(dishList);
+        }
+    }
+
 }
