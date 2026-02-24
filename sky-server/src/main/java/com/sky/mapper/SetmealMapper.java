@@ -24,4 +24,6 @@ public interface SetmealMapper {
 
 
     Page<Setmeal> page(SetmealPageQueryDTO setmealPageQueryDTO);
+
+    void deleteBatch(Long[] ids);
 }

@@ -8,4 +8,6 @@ public interface SetmealService {
     void saveSetmeal(SetmealDTO setmealDTO);
 
     PageResult page(SetmealPageQueryDTO setmealPageQueryDTO);
+
+    void deleteBatch(Long[] ids);
 }

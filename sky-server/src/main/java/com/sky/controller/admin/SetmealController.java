@@ -36,5 +36,10 @@ public class SetmealController {
         return Result.success(page);
     }
 
-
+    @DeleteMapping
+    public Result deleteSetmeal(@RequestParam Long[] ids) {
+        log.info("删除套餐:{}",ids);
+        setmealService.deleteBatch(ids);
+        return Result.success();
+    }
 }
