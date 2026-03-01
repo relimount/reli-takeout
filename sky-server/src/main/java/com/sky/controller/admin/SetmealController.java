@@ -10,6 +10,7 @@ import com.sky.service.SetmealService;
 import com.sky.vo.SetmealVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,6 +24,7 @@ public class SetmealController {
      * 添加套餐
      * */
     @PostMapping
+    @CacheEvict(cacheNames = "setmealCache", key = "#setmealDTO.categoryId")
     public Result saveSetmeal(@RequestBody SetmealDTO setmealDTO) {
         setmealService.saveSetmeal(setmealDTO);
         return Result.success();
@@ -41,6 +43,7 @@ public class SetmealController {
      * 删除套餐
      * */
     @DeleteMapping
+    @CacheEvict(cacheNames = "setmealCache", allEntries = true)
     public Result deleteSetmeal(@RequestParam Long[] ids) {
         log.info("删除套餐:{}",ids);
         setmealService.deleteBatch(ids);
@@ -59,12 +62,14 @@ public class SetmealController {
      * 修改套餐信息
      * */
     @PutMapping
+    @CacheEvict(cacheNames = "setmealCache", allEntries = true)
     public Result updateSetmeal(@RequestBody SetmealDTO setmealDTO) {
         setmealService.update(setmealDTO);
         return Result.success();
     }
 
     @PostMapping("/status/{status}")
+    @CacheEvict(cacheNames = "setmealCache", allEntries = true)
     public Result changeStatus(@PathVariable Integer status, Long id) {
         setmealService.changeStatus(status, id);
         return Result.success();
