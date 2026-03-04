@@ -19,6 +19,7 @@
             </if>
         </where>
     </select>
+
     <delete id="delete">
         delete from shopping_cart
         <where>
