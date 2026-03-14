@@ -81,5 +81,13 @@ public class OrderController {
         return Result.success();
     }
 
-
+    /**
+     * 催单
+     * @param id 订单 ID
+     * */
+    @GetMapping("/reminder/{id}")
+    public Result reminder(@PathVariable Long id) {
+        orderService.reminder(id);
+        return Result.success();
+    }
 }
